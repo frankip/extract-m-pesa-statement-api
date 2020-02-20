@@ -6,4 +6,4 @@ def homepage():
     """
     Render the homepage template on the / route
     """
-    return "'Hello, at admins World!'"
+    return "'Hello, at admins'"
