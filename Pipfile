@@ -9,6 +9,7 @@ flask-api = "*"
 flask-sqlalchemy = "*"
 passlib = "*"
 pyjwt = "*"
+pypdf2 = "*"
 
 [dev-packages]
 
