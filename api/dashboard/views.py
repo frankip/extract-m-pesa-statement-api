@@ -3,7 +3,12 @@ from werkzeug.utils import secure_filename
 from flask_api import status
 
 from . import dashboard
-from .models import Users
+from api.auth.models import Users
+from .models import UserRecords
+
+from pprint import pprint
+
+from .utils import convert_pdf_to_txt
 
 ALLOWED_EXTENSIONS = set(['txt', 'pdf'])
 
@@ -26,6 +31,20 @@ def authentication_request():
 
     return access_token
 
+
+def get_response(event_query):
+    """Heleper method for looping over Get methods"""
+    response = []
+    for records in event_query:
+        obj = {
+            'id': records.id,
+            'user': records.user,
+            'data': records.data_records
+        }
+        response.append(obj)
+    return response
+
+
 @dashboard.route('/')
 def main_page():
     """
@@ -39,10 +58,11 @@ def upload_document():
     
     file = request.files.get('file')
 
+
     if access_token:
         # Attempt to decode the token and get the User ID
         user_id = Users.decode_token(access_token)
-        print('raw',user_id)
+
         if not isinstance(user_id, str):
             # Go ahead and handle the request, the user is authenticated
             if request.method == 'POST':
@@ -60,20 +80,35 @@ def upload_document():
                     return resp, status.HTTP_400_BAD_REQUEST
 
                 if file and allowed_file(file.filename):
+
                     filename = secure_filename(file.filename)
-                    file.save(filename)
-                    print('filename', filename)
+
+                    res = convert_pdf_to_txt(file)
+
+                    data = UserRecords(user_id, res)
+                    data.save()
 
                     resp = {'message' : 'File successfully uploaded'}
-                    print('ssss', dir(file))
                     return resp, status.HTTP_201_CREATED
 
                 else:
                     resp = {'message' : 'Allowed file types are txt, pdf, png, jpg, jpeg, gif'}
                     resp.status_code = 400
                     return resp
-                
-                return "'hoyee'"
+
+            # Request.method == 'GET'
+            # GET all the events created by this user
+            records = UserRecords.get_all_user_records(user_id)
+            print('all', records)
+            # Get response object from helper method get_response()
+            results = get_response(records)
+
+            response = {
+                'message': "Fetched all records succesful",
+                'response' : results
+            }
+
+            return response, status.HTTP_200_OK
         else:
             # user is not legit, so the payload is an error message
             message = user_id

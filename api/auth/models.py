@@ -58,7 +58,7 @@ class Users(db.Model):
         try:
             #set up payload with an expiration time
             payload = {
-                'exp': datetime.utcnow() + timedelta(minutes=50),
+                'exp': datetime.utcnow() + timedelta(minutes=150),
                 'iat': datetime.utcnow(),
                 'sub': user_id
             }
@@ -88,7 +88,7 @@ class Users(db.Model):
             # blacklisted_token = BlackListToken.check_black_list(token)
             # if blacklisted_token:
             #     return "You have logged out, Please log in to continue"
-            # return payload['sub']
+            return payload['sub']
         except jwt.ExpiredSignatureError:
             # The token is expired, return an error string
             return "Expired token. Please login to get a new token"
