@@ -22,11 +22,6 @@ class FileUploader extends Component {
         this.setState({
             selectedFile: file
             });
-    //     console.log(this.validateSize(event));
-    //     if(this.validateSize(event)){ 
-    //     console.log(file);
-    // // if return true allow to setState
-        
     }
 
 
@@ -35,23 +30,19 @@ class FileUploader extends Component {
       const payload = this.state.selectedFile
       const data = new FormData() 
       data.append('file', payload)
-    //   const config = {     
-    //     headers: { 'content-type': 'multipart/form-data' }
-    // }
+      instance.post(ROOT + "/file-upload", data)
 
-        console.log('--<>', data);
-        instance.post(ROOT + "/file-upload", data)
+        .then(res => { // then print response status
+          toastr.success('upload success')
+        })
+        .catch(err => { // then print response status
+          console.log(err);
+          
 
-          .then(res => { // then print response status
-            toastr.success('upload success')
-          })
-          .catch(err => { // then print response status
-            console.log(err);
-            
-
-            toastr.error('upload fail')
-          })
-      };
+          toastr.error('upload fail')
+        })
+      
+    };
 
 
   render() {
@@ -65,7 +56,7 @@ class FileUploader extends Component {
                       <input type="file" name="file" className="form-control" onChange={this.handleChange}/>
                     </div>
                     <div className="col-md-6 pull-right">
-                    <button width="100%" type="button" className="btn btn-info" onClick={this.fileUploadHandler}>Upload File</button>
+                    <button width="100%" type="button" className="button button-block btn-info" onClick={this.fileUploadHandler}>Upload File</button>
                     </div>
                 </form>
           </div>

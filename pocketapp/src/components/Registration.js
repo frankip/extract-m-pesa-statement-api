@@ -4,18 +4,18 @@ import axios from "axios";
 import toastr from "toastr";
 
 import Validator from 'validator';
-// import passwordValidator from "password-validator";
+import passwordValidator from "password-validator";
 
 // local imports 
 import { ROOT } from "./url_config";
 
-// const validpassword = new passwordValidator();
-// validpassword.is().min(6)
-//   .is().max(20)
-//   .has().uppercase()
-//   .has().lowercase()
-//   .has().digits()
-//   .has().not().spaces();
+const validpassword = new passwordValidator();
+validpassword.is().min(6)
+  .is().max(20)
+  .has().uppercase()
+  .has().lowercase()
+  .has().digits()
+  .has().not().spaces();
 
 class Registration extends Component {
   constructor() {
@@ -66,11 +66,10 @@ class Registration extends Component {
           <div>
             <h1>
               Welcome to<br />
-              <span>Bright Events</span>
+              <span>Africas Pocket</span>
             </h1>
             <p>
-              create and manage different types of events while making them
-              easily accessible to target markets
+              Upload and analyze your Mpesa statements for more insigts
             </p>
           </div>
         </div>

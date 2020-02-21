@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-
+import "./../static/App.css"
 // local imports
 import { isTokenExpired } from './url_config';
 

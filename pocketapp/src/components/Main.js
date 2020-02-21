@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import toastr from "toastr";
+import "./../static/App.css"
+
 
 
 // local imports
@@ -65,51 +67,7 @@ class Main extends Component {
     this.setState({ ...this.state, payload});
   };
 
-  // searches through the events 
-//   handleSearch = e => {
-//     let searchStr = "";
-//     searchStr = e.target.value.toLowerCase().trim()
-//     let eventItem;
-    
-//     let searchRes = [];
-    
-//     if (searchStr !== ""){
-
-//       for (let eventIndex = 0; eventIndex < events.length; eventIndex++) {
-//         eventItem = events[eventIndex];
-
-//         if (eventItem.event
-//             .toLowerCase()
-//             .includes(
-//               searchStr
-//             ) || eventItem.location.toLowerCase().includes(searchStr)) {
-//           searchRes.push(eventItem);
-//         }
-//       }
-      
-//       this.setState({eventList: searchRes});
-//     }
-//     else { this.setState({ eventList: events }); }
-//   }
-  
   render() {
-
-
-    // loop through the events and pass them to the event card component
-    // const eventlist = this.state.eventList.map(event => (
-    //   <EventCard
-    //     key={event.id}
-    //     id={event.id}
-    //     event={event.event}
-    //     location={event.location}
-    //     date={event.date}
-    //     category={event.category}
-    //     description={event.description}
-    //     created_by={event.created_by}
-    //   />
-    // ));
-
-
     return <div>
         <Navigation />
         <section className="row">
