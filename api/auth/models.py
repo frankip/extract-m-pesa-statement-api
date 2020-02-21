@@ -84,11 +84,11 @@ class Users(db.Model):
         '''Decodes the access token from the Authorization header.'''
         try:
             # try to decode the token using our SECRET variable
-            payload = jwt.decode(token, app.secret_key)
-            blacklisted_token = BlackListToken.check_black_list(token)
-            if blacklisted_token:
-                return "You have logged out, Please log in to continue"
-            return payload['sub']
+            payload = jwt.decode(token, "db.config.get('SECRET_KEY')")
+            # blacklisted_token = BlackListToken.check_black_list(token)
+            # if blacklisted_token:
+            #     return "You have logged out, Please log in to continue"
+            # return payload['sub']
         except jwt.ExpiredSignatureError:
             # The token is expired, return an error string
             return "Expired token. Please login to get a new token"
