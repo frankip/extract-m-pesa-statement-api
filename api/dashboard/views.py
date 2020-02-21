@@ -85,16 +85,16 @@ def upload_document():
 
                     res = convert_pdf_to_txt(file)
 
-                    data = UserRecords(user_id, res)
+                    data = UserRecords(res, user=user_id)
                     data.save()
 
                     resp = {'message' : 'File successfully uploaded'}
                     return resp, status.HTTP_201_CREATED
 
                 else:
-                    resp = {'message' : 'Allowed file types are txt, pdf, png, jpg, jpeg, gif'}
-                    resp.status_code = 400
-                    return resp
+                    resp = {'message' : 'Allowed file types are txt, pdf'}
+                    return resp,  status.HTTP_400_BAD_REQUEST
+
 
             # Request.method == 'GET'
             # GET all the events created by this user
@@ -118,16 +118,3 @@ def upload_document():
             return response, status.HTTP_401_UNAUTHORIZED
 
 
-"""
-we have created Auth, and upload
-upload is working fine but we need a way to extract data
-we can also use the with open comand
-
-maybe if we try pasing the raw file as we initilaize the pdfpy2
-also check pdfpy2 password it has something like decode
-
-what if we get the file and creat a utils file that extracts
-
-then look how to join  with a front end
-
-"""

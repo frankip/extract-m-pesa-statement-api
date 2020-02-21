@@ -9,7 +9,7 @@ html {
 }
 
 body {
-    background: #EAD2AC;
+    background: #667090c7;
     font-family: 'Titillium Web', sans-serif;
 }
 
@@ -231,7 +231,7 @@ input::placeholder {
 
 .nav {
     background: #ffffff;
-    min-height: 50px;
+    min-height: 70px;
 }
 
 .nav .left {
