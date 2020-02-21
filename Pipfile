@@ -10,6 +10,7 @@ flask-sqlalchemy = "*"
 passlib = "*"
 pyjwt = "*"
 pypdf2 = "*"
+flask-cors = "*"
 
 [dev-packages]
 
