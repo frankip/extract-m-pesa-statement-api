@@ -15,7 +15,7 @@ def convert_pdf_to_txt(path, password):
 
     fp = path
     interpreter = PDFPageInterpreter(rsrcmgr, device)
-    # password = ""
+    # password = "29281040"
     password = password
     maxpages = 0
     caching = True

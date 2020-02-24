@@ -69,7 +69,7 @@ def upload_document():
     # print('==values', password4)
     # print('==json', password5)
     
-    file = request.files.get('file')
+    # file = request.files.get('file')
 
 
     if access_token:
@@ -84,7 +84,7 @@ def upload_document():
                     resp = {'message' : 'No file part in the request'}
                     return resp, status.HTTP_400_BAD_REQUEST
 
-                # file = request.files.get('file')
+                file = request.files.get('file')
 
                 # if user does not select file, browser also
                 # submit an empty part without filename
