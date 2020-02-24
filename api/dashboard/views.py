@@ -39,7 +39,8 @@ def get_response(event_query):
         obj = {
             'id': records.id,
             'user': records.user,
-            'data': records.data_records
+            'in': records.paid_in,
+            'out': records.paid_out
         }
         response.append(obj)
     return response
@@ -83,9 +84,11 @@ def upload_document():
 
                     filename = secure_filename(file.filename)
 
-                    res = convert_pdf_to_txt(file)
+                    paid_in, paid_out = convert_pdf_to_txt(file)
+                    print('in',paid_in)
+                    print('out', paid_out)
 
-                    data = UserRecords(res, user=user_id)
+                    data = UserRecords(paid_in, paid_out, user=user_id)
                     data.save()
 
                     resp = {'message' : 'File successfully uploaded'}
@@ -99,7 +102,6 @@ def upload_document():
             # Request.method == 'GET'
             # GET all the events created by this user
             records = UserRecords.get_all_user_records(user_id)
-            print('all', records)
             # Get response object from helper method get_response()
             results = get_response(records)
 

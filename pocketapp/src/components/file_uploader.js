@@ -3,12 +3,16 @@ import toastr from "toastr";
 import { instance, ROOT} from "./url_config";
 import "./../static/file-upload.css"
 
+import { LineChart, PieChart } from 'react-chartkick'
+import 'chart.js'
 
 class FileUploader extends Component {
     constructor() {
       super();
       this.state = {
         recordList: [],
+        moneyIn: [],
+        moneyOut: [],
         selectedFile: null,
         open: false,
         payload: {
@@ -20,11 +24,21 @@ class FileUploader extends Component {
 
     handleChange = (event) => {
         var file = event.target.files[0];
-
-        console.log('+++++++++',file);
         this.setState({
             selectedFile: file
             });
+    }
+
+    update_dict = () => {
+      let raw_data = {
+          'SEND MONEY': this.state.moneyIn[0],
+          'RECEIVED MONEY': this.state.moneyIn[1], 
+          'AGENT DEPOSIT': this.state.moneyIn[2], 
+          'AGENT WITHDRAWAL': this.state.moneyIn[3], 
+          'LIPA NA M-PESA (PAYBILL)': this.state.moneyIn[4], 
+          'LIPA NA M-PESA (BUY GOODS': this.state.moneyIn[5],
+          'OTHERS': this.state.moneyIn[6],
+        };
     }
 
     // fetch events from api endpoint
@@ -32,10 +46,14 @@ class FileUploader extends Component {
     instance.get(`${ROOT}/file-upload`)
       .then(response => {
         const records = response.data['response'];
-        console.log('--0',records);
-        this.setState({ ...this.state, recordList: response.data['response'] }, () => {
-        console.log('--0',this.state.recordList);
-        
+        this.setState({ ...this.state, 
+          recordList: response.data['response'],
+          moneyIn: response.data['response'][0]['in'],
+          moneyOut: response.data['response'][0]['out']
+        }, () => {
+          // this.update_dict()
+          // console.log('3456789',this.state.moneyIn);
+          
         });
       })
       .catch(function (error) {
@@ -65,24 +83,62 @@ class FileUploader extends Component {
     };
 
     handlepasswordchange = e => {
-    
       // this.setState({ ...this.state, [e.target.name]: e.target.value });
       const { payload } = this.state;
       payload[e.target.name] = e.target.value;
       this.setState({ ...this.state, payload });
-      // console.log(this.state.payload);
       
     };
-  
+    // const raw_data = {
+    //   'SEND MONEY': this.state.recordList[0]['out'][0],
+    //   'RECEIVED MONEY': this.state.recordList[0]['out'][1], 
+    //   'AGENT DEPOSIT': this.state.recordList[0]['out'][2], 
+    //   'AGENT WITHDRAWAL': this.state.recordList[0]['out'][3], 
+    //   'LIPA NA M-PESA (PAYBILL)': this.state.recordList[0]['out'][4], 
+    //   'LIPA NA M-PESA (BUY GOODS': this.state.recordList[0]['out'][5],
+    //   'OTHERS': this.state.recordList[0]['out'][6],
+    // };
+    
 
 
   render() {
+    // console.log('renderin', this.state.moneyIn);
+    let raw_data_in = {
+      'SEND MONEY': this.state.moneyIn[0],
+      'RECEIVED MONEY': this.state.moneyIn[1], 
+      'AGENT DEPOSIT': this.state.moneyIn[2], 
+      'AGENT WITHDRAWAL': this.state.moneyIn[3], 
+      'LIPA NA M-PESA (PAYBILL)': this.state.moneyIn[4], 
+      'LIPA NA M-PESA (BUY GOODS': this.state.moneyIn[5],
+      'OTHERS': this.state.moneyIn[6],
+    };
+    let raw_data_out = {
+      'SEND MONEY': this.state.moneyOut[0],
+      'RECEIVED MONEY': this.state.moneyOut[1], 
+      'AGENT DEPOSIT': this.state.moneyOut[2], 
+      'AGENT WITHDRAWAL': this.state.moneyOut[3], 
+      'LIPA NA M-PESA (PAYBILL)': this.state.moneyOut[4], 
+      'LIPA NA M-PESA (BUY GOODS': this.state.moneyOut[5],
+      'OTHERS': this.state.moneyOut[6],
+    };
+  
     const recordlist = this.state.recordList.map(records => (
-    <div key={records.id}>
-        <div className="col-xs-4 card">
-          <h3 className="card-title code code-details">&lt;{records.user}&gt;</h3>
-          <p className="card-description">{records.data}</p>
-        </div>
+      
+      <div key={records.id}>
+        <PieChart data={raw_data_in} />
+
+        
+        <PieChart data={raw_data_out} />
+        
+      {/* <div className="col-xs-4 card">
+        <h3 className="card-title code code-details">&lt;{records.user}&gt;</h3>
+        <ul>
+
+        <li className="card-description">Paid IN - {records.in}</li>
+        <li className="card-description">Paid OUT - {records.out}</li>
+        </ul>
+        
+        </div> */}
       </div>
     ));
 
@@ -105,6 +161,8 @@ class FileUploader extends Component {
         <div className="row display">
           <div className="card-list">
           { recordlist }
+          {/* <PieChart data={this.update_dict} /> /> */}
+         
           </div>
         </div>
       </div>

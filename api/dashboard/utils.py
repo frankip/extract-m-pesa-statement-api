@@ -25,14 +25,22 @@ def convert_pdf_to_txt(path):
 
     text = retstr.getvalue()
 
-    # fp.close()
+    fp.close()
     device.close()
     retstr.close()
-    # print('content', text)
-    lines = [lin for lin in text.encode("ascii", "ignore").split()]
 
-    print('content',text[25:700])
-    return text[25:700]
+    raw_lines = text.splitlines()[3:84]
+
+    # remove white space
+    lines = list(filter(None, raw_lines))
+    paid_in = [float(i.replace(',', '')) for i in lines[24:32]]
+    paid_out = [float(i.replace(',', '')) for i in lines[33:41]]
+    # print('dataprod-paid-in-------', paid_in)
+    data = list(zip(paid_in, paid_out))
+    # print('dataprod-paid-out-------', data)
+
+    # return text[:10]
+    return paid_in, paid_out
 
 """
 remaining tasks

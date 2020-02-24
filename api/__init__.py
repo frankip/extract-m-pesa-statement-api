@@ -15,15 +15,15 @@ db = SQLAlchemy()
 def create_app(config_name):
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_object(app_config[config_name])
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'africaspocket.sqlite')
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'africas.sqlite')
     cors = CORS(app)
     app.config['CORS_HEADERS'] = 'Content-Type'
 
     # app.config.from_pyfile('config.py')
     db.init_app(app)
+
     with app.app_context():
         db.create_all()
-    # db.create_all()
 
     from .admin import admin as admin_blueprint
     from .auth import auth as auth_blueprint
@@ -35,9 +35,5 @@ def create_app(config_name):
     app.register_blueprint(dashboard_blueprint, url_prefix='/')
 
 
-
-    @app.route('/')
-    def hello_world():
-        return 'Hello, World!'
 
     return app
