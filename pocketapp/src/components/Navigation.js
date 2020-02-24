@@ -32,10 +32,10 @@ class Navigation extends Component {
               {this.state.token && !isTokenExpired(this.state.token)?
               <span>
               <li>
-                <Link to="/" className="fa fa-book">My Events</Link>
+                <Link to="/" className="fa fa-book"></Link>
               </li>
               <li>
-                <Link to="/" className="fa fa-fire" >Most Popular</Link>
+                <Link to="/" className="fa fa-fire" ></Link>
               </li>
               </span>:null
               }
