@@ -69,10 +69,15 @@ class FileUploader extends Component {
       const payload = this.state.selectedFile
       const data = new FormData() 
       data.append('file', payload)
+      
+      
       instance.post(ROOT + "/file-upload", data)
 
-        .then(res => { // then print response status
-          toastr.success('upload success')
+        .then(res => { 
+          // then print response status
+          console.log(res);
+          
+          toastr.success(res.data)
         })
         .catch(err => { // then print response status
           console.log(err);
@@ -87,20 +92,7 @@ class FileUploader extends Component {
       const { payload } = this.state;
       payload[e.target.name] = e.target.value;
       this.setState({ ...this.state, payload });
-      
     };
-    // const raw_data = {
-    //   'SEND MONEY': this.state.recordList[0]['out'][0],
-    //   'RECEIVED MONEY': this.state.recordList[0]['out'][1], 
-    //   'AGENT DEPOSIT': this.state.recordList[0]['out'][2], 
-    //   'AGENT WITHDRAWAL': this.state.recordList[0]['out'][3], 
-    //   'LIPA NA M-PESA (PAYBILL)': this.state.recordList[0]['out'][4], 
-    //   'LIPA NA M-PESA (BUY GOODS': this.state.recordList[0]['out'][5],
-    //   'OTHERS': this.state.recordList[0]['out'][6],
-    // };
-    
-
-
   render() {
     // console.log('renderin', this.state.moneyIn);
     let raw_data_in = {
@@ -125,20 +117,12 @@ class FileUploader extends Component {
     const recordlist = this.state.recordList.map(records => (
       
       <div key={records.id}>
+        <h3>Data In</h3>
         <PieChart data={raw_data_in} />
 
-        
+        <h3>Data Out</h3>
         <PieChart data={raw_data_out} />
         
-      {/* <div className="col-xs-4 card">
-        <h3 className="card-title code code-details">&lt;{records.user}&gt;</h3>
-        <ul>
-
-        <li className="card-description">Paid IN - {records.in}</li>
-        <li className="card-description">Paid OUT - {records.out}</li>
-        </ul>
-        
-        </div> */}
       </div>
     ));
 
@@ -150,7 +134,7 @@ class FileUploader extends Component {
                     <div>
                       <label htmlFor="file">Upload your Mesa statement</label>
                       <input type="file" name="file" className="forms" onChange={this.handleChange}/>
-                      {/* <input type="password" name="password" className="form" placeholder="password" required ref="password" onChange={this.handlepasswordchange} /> */}
+                      <input type="password" name="password" className="password" placeholder="password" required ref="password" onChange={this.handlepasswordchange} />
                     </div>
                     <div className="col-md-6 pull-left">
                     <button width="100%" type="button" className="button-click buttons" onClick={this.fileUploadHandler}>Upload File</button>

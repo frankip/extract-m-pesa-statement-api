@@ -56,6 +56,18 @@ def main_page():
 @dashboard.route('/file-upload', methods=['GET', 'POST'])
 def upload_document():
     access_token = authentication_request()
+    # password = request.args
+    password2 = request.form.get('password')
+    # password3 = request.files
+    # password4 = request.values
+    # password5 = request.json
+
+
+    # print('===args', password)
+    # print('===form', password2)
+    # print('==files', password3)
+    # print('==values', password4)
+    # print('==json', password5)
     
     file = request.files.get('file')
 
@@ -84,15 +96,18 @@ def upload_document():
 
                     filename = secure_filename(file.filename)
 
-                    paid_in, paid_out = convert_pdf_to_txt(file)
-                    print('in',paid_in)
-                    print('out', paid_out)
+                    text_data= convert_pdf_to_txt(file, password2)
 
-                    data = UserRecords(paid_in, paid_out, user=user_id)
-                    data.save()
+                    if isinstance(text_data, str):
+                        return text_data
+                    else:
+                        paid_in, paid_out = text_data
 
-                    resp = {'message' : 'File successfully uploaded'}
-                    return resp, status.HTTP_201_CREATED
+                        data = UserRecords(paid_in, paid_out, user=user_id)
+                        data.save()
+
+                        resp = {'message' : 'File successfully uploaded'}
+                        return resp, status.HTTP_201_CREATED
 
                 else:
                     resp = {'message' : 'Allowed file types are txt, pdf'}

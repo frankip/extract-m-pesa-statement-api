@@ -26,6 +26,11 @@
     cursor: pointer;
     width: auto;
   }
+  .file .password {
+    background: rgba(19, 35, 47, 0.9);
+    width: 20%;
+    
+  }
  
  
   .file input:hover + label,
