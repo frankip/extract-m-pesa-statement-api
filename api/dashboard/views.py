@@ -40,7 +40,8 @@ def get_response(event_query):
             'id': records.id,
             'user': records.user,
             'in': records.paid_in,
-            'out': records.paid_out
+            'out': records.paid_out,
+            'period': records.date_period
         }
         response.append(obj)
     return response

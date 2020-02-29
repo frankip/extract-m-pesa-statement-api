@@ -127,17 +127,15 @@ button:hover {
   }
 
   .pie-chart {
-		float: left;
-		position: relative;
-		background: white;
-		border: 1px solid silver;
     margin: 1.5% 2%;
     height: 100%;
   }
   .chart{
-    position: relativeå;
+    background: white;
+    position: relative;
     width: 100%;
     height: 100%;
+    margin: 1%;
   }
   @media (max-width: 500px) {
     .pie-chart {

@@ -5,7 +5,7 @@ import "./../static/App.css"
 
 // local imports
 import Navigation from './Navigation';
-import FileUploader from './file_uploader';
+import FileUploader from './View_files';
 
 
 class Main extends Component {

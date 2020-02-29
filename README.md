@@ -23,4 +23,4 @@ use the env_sample to activate your .env enviroment. for storing senstive inform
 
 Run `flask run` in your terminal to start the server.
 
-got to [Sign_up](https://kind-darwin-035477.netlify.com/signup) to sign up
+got to [Sign_up](https://africaspocket.netlify.com/signup) to sign up
