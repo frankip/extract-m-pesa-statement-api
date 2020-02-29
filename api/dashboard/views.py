@@ -98,12 +98,12 @@ def upload_document():
 
                     text_data= convert_pdf_to_txt(file, password2)
 
-                    if isinstance(text_data, str):
+                    if isinstance(text_data, dict):
                         return text_data
                     else:
-                        paid_in, paid_out = text_data
+                        paid_in, paid_out, date_period = text_data
 
-                        data = UserRecords(paid_in, paid_out, user=user_id)
+                        data = UserRecords(paid_in, paid_out, date_period,  user=user_id)
                         data.save()
 
                         resp = {'message' : 'File successfully uploaded'}
@@ -117,6 +117,7 @@ def upload_document():
             # Request.method == 'GET'
             # GET all the events created by this user
             records = UserRecords.get_all_user_records(user_id)
+
             # Get response object from helper method get_response()
             results = get_response(records)
 

@@ -19,16 +19,15 @@ class UserRecords(db.Model):
     paid_in = db.Column(db.PickleType())
     paid_out = db.Column(db.PickleType())
     user = db.Column(db.Integer, db.ForeignKey(Users.id))
-    
-    # date_period = db.Column(db.DateTime, default=db.func.current_timestamp())
+    date_period = db.Column(db.String())
     # created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
     
 
-    def __init__(self, paid_in, paid_out, user):
-        # self.date_period = date_period
+    def __init__(self, paid_in, paid_out, date_period, user):
         # self.created_at = created_at
         self.paid_in = paid_in
         self.paid_out = paid_out
+        self.date_period = date_period
         self.user = user
 
     def save(self):
@@ -42,4 +41,4 @@ class UserRecords(db.Model):
         """
         Get all the events created by the user
         """
-        return UserRecords.query.filter_by(user=user_id).all()
+        return UserRecords.query.filter_by(user=user_id).all()[::-1]
